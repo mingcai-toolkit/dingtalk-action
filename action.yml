@@ -8,20 +8,27 @@ inputs:
   secret:
     description: '加签密钥（可选）'
     required: false
+    default: ""
   message:
     description: '消息内容'
     required: true
   at_mobiles:
-    description: '@手机号（逗号分隔）'
+    description: '@手机号（逗号分隔，可选）'
     required: false
+    default: ""
   markdown:
-    description: '是否使用 Markdown 消息'
+    description: '是否使用 Markdown 消息（true/false）'
     required: false
     default: "false"
+  title:
+    description: 'Markdown 标题（可选）'
+    required: false
+    default: "Notification"
 
 runs:
   using: docker
   image: 'docker://ghcr.io/mingcai-toolkit/dingtalk-action:latest'
+
   entrypoint: "/usr/local/bin/dingtalk-action"
   args:
     - send
@@ -30,3 +37,4 @@ runs:
     - "--msg=${{ inputs.message }}"
     - "--at=${{ inputs.at_mobiles }}"
     - "--md=${{ inputs.markdown }}"
+    - "--title=${{ inputs.title }}"
